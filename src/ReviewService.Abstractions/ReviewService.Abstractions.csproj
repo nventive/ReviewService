@@ -2,5 +2,14 @@
 	<PropertyGroup>
 		<LangVersion>10.0</LangVersion>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<Authors>nventive</Authors>
+		<Company>nventive</Company>
+		<AssemblyName>ReviewService.Abstractions</AssemblyName>
+		<PackageId>ReviewService.Abstractions</PackageId>
+		<Description>ReviewService.Abstractions</Description>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/nventive/ReviewService</PackageProjectUrl>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageTags>review;maui;winui;ios;android</PackageTags>
 	</PropertyGroup>
 </Project>
