@@ -28,7 +28,7 @@ stages:
           GeneratePackageOnBuild: true
 
     pool:
-      name: $(windowsHostedAgentImage)
+      vmImage: $(windowsHostedAgentImage)
 
     variables:
     - name: PackageOutputPath # Path where nuget packages will be copied to.
