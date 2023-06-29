@@ -1,0 +1,56 @@
+trigger:
+  branches:
+    include:
+    - main
+
+variables:
+- name: NUGET_VERSION
+  value: 6.2.0
+- name: windowsHostedAgentImage
+  value: 'windows-2022'
+- name: ArtifactName
+  value: Packages
+- name: SolutionFileName
+  value: ReviewService.sln
+- name: IsReleaseBranch # Should this branch name use the release stage.
+  value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))]
+
+stages:
+- stage: Build
+  jobs:
+  - job: Windows
+    strategy:
+      maxParallel: 3
+      matrix:
+        Packages:
+          ApplicationConfiguration: Release
+          ApplicationPlatform: NuGet
+          GeneratePackageOnBuild: true
+
+    pool:
+      name: $(windowsHostedAgentImage)
+
+    variables:
+    - name: PackageOutputPath # Path where nuget packages will be copied to.
+      value: $(Build.ArtifactStagingDirectory)
+
+    workspace:
+      clean: all # Cleanup the workspace before starting.
+
+    steps:
+    - template: stage-build.yml
+
+#- stage: Release
+#  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['IsReleaseBranch'], 'true')) # Only release when the build is not for a Pull Request and branch name fits.
+#  jobs:
+#  - job: Publish_NuGet_External
+
+#    pool:
+#      name: $(windowsHostedAgentImage)
+
+#    workspace:
+#      clean: all # Cleanup the workspace before starting.
+
+#    steps:
+#    - template: stage-release.yml
+
