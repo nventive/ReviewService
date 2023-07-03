@@ -15,7 +15,7 @@ public interface IReviewCondition<TReviewSettings>
 	/// Validates that the condition is satisfied.
 	/// </summary>
 	/// <param name="ct"><see cref="CancellationToken"/>.</param>
-	/// <param name="currentSettings">The persisted <see cref="TReviewSettings"/> tracked by the application.</param>
+	/// <param name="currentSettings">The persisted <typeparamref name="TReviewSettings"/> tracked by the application.</param>
 	/// <param name="currentDateTime">The current date and time.</param>
 	/// <returns>If a condition is satisfied.</returns>
 	Task<bool> Validate(CancellationToken ct, TReviewSettings currentSettings, DateTimeOffset currentDateTime);
