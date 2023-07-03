@@ -40,17 +40,17 @@ stages:
     steps:
     - template: stage-build.yml
 
-#- stage: Release
-#  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['IsReleaseBranch'], 'true')) # Only release when the build is not for a Pull Request and branch name fits.
-#  jobs:
-#  - job: Publish_NuGet_External
+- stage: Release
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['IsReleaseBranch'], 'true')) # Only release when the build is not for a Pull Request and branch name fits.
+  jobs:
+  - job: Publish_NuGet_External
 
-#    pool:
-#      name: $(windowsHostedAgentImage)
+    pool:
+      name: $(windowsHostedAgentImage)
 
-#    workspace:
-#      clean: all # Cleanup the workspace before starting.
+    workspace:
+      clean: all # Cleanup the workspace before starting.
 
-#    steps:
-#    - template: stage-release.yml
+    steps:
+    - template: stage-release.yml
 
