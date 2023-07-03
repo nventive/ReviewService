@@ -24,14 +24,14 @@ stages:
       matrix:
         Packages:
           ApplicationConfiguration: Release
-          ApplicationPlatform: NuGet
+          ApplicationPlatform: Any CPU
           GeneratePackageOnBuild: true
 
     pool:
       vmImage: $(windowsHostedAgentImage)
 
     variables:
-    - name: PackageOutputPath # Path where nuget packages will be copied to.
+    - name: PackageOutputPath # Path where NuGet packages will be copied to.
       value: $(Build.ArtifactStagingDirectory)
 
     workspace:
