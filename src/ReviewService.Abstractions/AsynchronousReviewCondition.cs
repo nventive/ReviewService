@@ -13,6 +13,10 @@ public sealed class AsynchronousReviewCondition<TReviewSettings> : IReviewCondit
 {
 	private readonly Func<CancellationToken, TReviewSettings, DateTimeOffset, Task<bool>> _condition;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="AsynchronousReviewCondition{TReviewSettings}"/> class.
+	/// </summary>
+	/// <param name="condition">A condition used to determine if a review should be requested based on <typeparamref name="TReviewSettings"/>.</param>
 	public AsynchronousReviewCondition(Func<CancellationToken, TReviewSettings, DateTimeOffset, Task<bool>> condition)
 	{
 		_condition = condition;

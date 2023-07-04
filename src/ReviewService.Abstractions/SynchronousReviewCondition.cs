@@ -13,6 +13,10 @@ public sealed class SynchronousReviewCondition<TReviewSettings> : IReviewConditi
 {
 	private readonly Func<TReviewSettings, DateTimeOffset, bool> _condition;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SynchronousReviewCondition{TReviewSettings}"/> class.
+	/// </summary>
+	/// <param name="condition">A condition used to determine if a review should be requested based on <typeparamref name="TReviewSettings"/>.</param>
 	public SynchronousReviewCondition(Func<TReviewSettings, DateTimeOffset, bool> condition)
 	{
 		_condition = condition;

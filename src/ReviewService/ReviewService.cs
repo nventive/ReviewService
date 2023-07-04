@@ -20,6 +20,13 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 	private readonly IReviewSettingsSource<TReviewSettings> _reviewSettingsSource;
 	private readonly IList<IReviewCondition<TReviewSettings>> _reviewConditions;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ReviewService{TReviewSettings}"/> class.
+	/// </summary>
+	/// <param name="logger">The service logger.</param>
+	/// <param name="reviewPrompter">The native review prompter.</param>
+	/// <param name="reviewSettingsSource">The review settings source (Read and write).</param>
+	/// <param name="reviewConditionStrategyBuilder">The review conditions builder.</param>
 	public ReviewService(
 		ILogger<ReviewService<TReviewSettings>> logger,
 		IReviewPrompter reviewPrompter,

@@ -13,6 +13,10 @@ public class ReviewPrompter : IReviewPrompter
 {
 	private readonly ILogger _logger;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ReviewPrompter"/> class.
+	/// </summary>
+	/// <param name="logger">The service logger.</param>
 	public ReviewPrompter(ILogger<ReviewPrompter> logger)
 	{
 		_logger = logger ?? NullLogger<ReviewPrompter>.Instance;
