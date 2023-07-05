@@ -25,7 +25,7 @@ public class ReviewPrompter : IReviewPrompter
 	/// <inheritdoc/>
 	public Task TryPrompt()
 	{
-		_logger.LogWarning("Prompting for a review is not implemented on windows.");
+		_logger.LogWarning("Prompting for a review is not implemented on Windows.");
 
 		return Task.CompletedTask;
 	}

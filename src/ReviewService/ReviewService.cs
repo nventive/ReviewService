@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using ReviewService.Abstractions;
 
 namespace ReviewService;
@@ -26,18 +27,18 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 	/// <param name="logger">The service logger.</param>
 	/// <param name="reviewPrompter">The native review prompter.</param>
 	/// <param name="reviewSettingsSource">The review settings source (Read and write).</param>
-	/// <param name="reviewConditionStrategyBuilder">The review conditions builder.</param>
+	/// <param name="reviewConditionsBuilder">The review conditions builder.</param>
 	public ReviewService(
 		ILogger<ReviewService<TReviewSettings>> logger,
 		IReviewPrompter reviewPrompter,
 		IReviewSettingsSource<TReviewSettings> reviewSettingsSource,
-		IReviewConditionsBuilder<TReviewSettings> reviewConditionStrategyBuilder
+		IReviewConditionsBuilder<TReviewSettings> reviewConditionsBuilder
 	)
 	{
-		_logger = logger;
+		_logger = logger ?? NullLogger<ReviewService<TReviewSettings>>.Instance;
 		_reviewPrompter = reviewPrompter;
 		_reviewSettingsSource = reviewSettingsSource;
-		_reviewConditions = reviewConditionStrategyBuilder?.Conditions ?? ReviewConditionsBuilder.Default<TReviewSettings>().Conditions;
+		_reviewConditions = reviewConditionsBuilder?.Conditions ?? ReviewConditionsBuilder.Default<TReviewSettings>().Conditions;
 	}
 
 	/// <inheritdoc/>
