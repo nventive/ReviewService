@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ReviewService.Abstractions;
 
@@ -68,6 +70,34 @@ public static partial class ReviewConditionBuilderExtensions
 		builder.Conditions.Add(new SynchronousReviewCondition<TReviewSettings>(
 			(reviewSettings, currentDateTime) => reviewSettings.ApplicationFirstLaunched.HasValue && reviewSettings.ApplicationFirstLaunched.Value + minimumTimeElapsed <= currentDateTime)
 		);
+		return builder;
+	}
+
+	/// <summary>
+	/// Adds a custom synchronous condition.
+	/// </summary>
+	/// <typeparam name="TReviewSettings">The type of the object that we use for tracking.</typeparam>
+	/// <param name="builder">The builder.</param>
+	/// <param name="condition">The condition.</param>
+	/// <returns><see cref="IReviewConditionsBuilder{TReviewSettings}"/>.</returns>
+	public static IReviewConditionsBuilder<TReviewSettings> Custom<TReviewSettings>(this IReviewConditionsBuilder<TReviewSettings> builder, Func<TReviewSettings, DateTimeOffset, bool> condition)
+		where TReviewSettings : ReviewSettings
+	{
+		builder.Conditions.Add(new SynchronousReviewCondition<TReviewSettings>(condition));
+		return builder;
+	}
+
+	/// <summary>
+	/// Adds a custom asynchronous condition.
+	/// </summary>
+	/// <typeparam name="TReviewSettings">The type of the object that we use for tracking.</typeparam>
+	/// <param name="builder">The builder.</param>
+	/// <param name="condition">The condition.</param>
+	/// <returns><see cref="IReviewConditionsBuilder{TReviewSettings}"/>.</returns>
+	public static IReviewConditionsBuilder<TReviewSettings> CustomAsync<TReviewSettings>(this IReviewConditionsBuilder<TReviewSettings> builder, Func<CancellationToken, TReviewSettings, DateTimeOffset, Task<bool>> condition)
+		where TReviewSettings : ReviewSettings
+	{
+		builder.Conditions.Add(new AsynchronousReviewCondition<TReviewSettings>(condition));
 		return builder;
 	}
 }
