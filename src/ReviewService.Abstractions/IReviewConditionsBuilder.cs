@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// Provide a way to gather the review conditions.

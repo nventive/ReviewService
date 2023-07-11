@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// Provides ways to prompt user to review the current application.

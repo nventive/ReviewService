@@ -11,5 +11,6 @@
 		<PackageProjectUrl>https://github.com/nventive/ReviewService</PackageProjectUrl>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageTags>review;maui;winui;ios;android</PackageTags>
+		<RootNamespace>ReviewService</RootNamespace>
 	</PropertyGroup>
 </Project>
