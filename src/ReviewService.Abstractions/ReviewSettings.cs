@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// The review prompt settings used for prompt conditions.

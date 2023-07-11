@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// Holds the review prompt settings used for prompt conditions.

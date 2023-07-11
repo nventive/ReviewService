@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// A condition used to determine if a review should be requested based on <see cref="ReviewSettings"/>.

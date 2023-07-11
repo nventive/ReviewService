@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// Provides ways to validate review prompt conditions using <typeparamref name="TReviewSettings"/> and

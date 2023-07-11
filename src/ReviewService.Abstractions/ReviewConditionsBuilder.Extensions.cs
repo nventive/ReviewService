@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ReviewService.Abstractions;
+namespace ReviewService;
 
 /// <summary>
 /// Extensions for <see cref="IReviewConditionsBuilder{TReviewSettings}"/>.

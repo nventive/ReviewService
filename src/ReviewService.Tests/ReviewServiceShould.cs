@@ -1,5 +1,4 @@
 using Moq;
-using ReviewService.Abstractions;
 
 namespace ReviewService.Tests;
 
@@ -9,7 +8,6 @@ namespace ReviewService.Tests;
 public sealed class ReviewServiceShould
 {
 	private readonly Mock<IReviewPrompter> _reviewPrompterMock;
-	private readonly Mock<IReviewSettingsSource<ReviewSettings>> _reviewSettingsSourceMock;
 
 	public static IList<object[]> ReviewSettingsAndConditionsSatisfiedMapping =>
 		new List<object[]>
@@ -37,7 +35,6 @@ public sealed class ReviewServiceShould
 	public ReviewServiceShould()
 	{
 		_reviewPrompterMock = new Mock<IReviewPrompter>();
-		_reviewSettingsSourceMock = new Mock<IReviewSettingsSource<ReviewSettings>>();
 	}
 
 	[Theory, MemberData(nameof(ReviewSettingsAndConditionsSatisfiedMapping))]
@@ -45,18 +42,19 @@ public sealed class ReviewServiceShould
 	{
 		// Arrange.
 		var reviewConditionsBuilder = ReviewConditionsBuilder.Default();
+		var reviewSettingsSource = new MemoryReviewSettingsSource<ReviewSettings>();
 
-		_reviewSettingsSourceMock.Setup(x => x.Read(It.IsAny<CancellationToken>())).ReturnsAsync(reviewSettings);
+		await reviewSettingsSource.Write(CancellationToken.None, reviewSettings);
 
 		var reviewService = new ReviewService<ReviewSettings>(
 			logger: null,
 			reviewPrompter: _reviewPrompterMock.Object,
-			reviewSettingsSource: _reviewSettingsSourceMock.Object,
+			reviewSettingsSource: reviewSettingsSource,
 			reviewConditionsBuilder: reviewConditionsBuilder
 		);
 
 		// Act.
-		await reviewService.TryRequestReview(ct: CancellationToken.None);
+		await reviewService.TryRequestReview(CancellationToken.None);
 
 		// Assert.
 		_reviewPrompterMock.Verify(x => x.TryPrompt(), areConditionsSatisfied ? Times.Once : Times.Never);
