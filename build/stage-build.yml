@@ -52,6 +52,25 @@
       /p:PackageVersion=$(GitVersion.SemVer)
       /p:ContinuousIntegrationBuild=true
 
+- script: >
+    dotnet test $(Build.SourcesDirectory)/$(SolutionFileName)
+    /p:Configuration=$(ApplicationConfiguration)
+    /p:CollectCoverage=true 
+    /p:CoverletOutputFormat=cobertura
+    /p:CoverletOutput=$(Build.SourcesDirectory)/coverage
+    /p:ExcludeByFile="**/*.g.cs"
+    --logger trx
+    --no-build
+  displayName: 'Run tests'
+  condition: succeeded()
+
+- task: PublishTestResults@2
+  displayName: 'Publish test results'
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact $(ApplicationConfiguration)'
   inputs:
