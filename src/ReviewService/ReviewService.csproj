@@ -6,11 +6,12 @@
 		<Company>nventive</Company>
 		<AssemblyName>ReviewService</AssemblyName>
 		<PackageId>ReviewService</PackageId>
-		<Description>ReviewService</Description>
+		<Description>A multi-platform recipe to rate mobile apps.</Description>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/nventive/ReviewService</PackageProjectUrl>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageTags>review;maui;winui;ios;android</PackageTags>
+		<Copyright>https://github.com/nventive/ReviewService/blob/main/LICENSE</Copyright>
 		<RootNamespace>ReviewService</RootNamespace>
 	</PropertyGroup>
 
