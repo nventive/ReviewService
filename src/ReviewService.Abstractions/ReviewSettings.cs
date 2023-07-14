@@ -8,7 +8,7 @@ namespace ReviewService;
 public record ReviewSettings
 {
 	/// <summary>
-	/// Gets or sets the number of primary actions completed
+	/// Gets or sets the number of primary actions completed.
 	/// </summary>
 	public int PrimaryActionCompletedCount { get; init; }
 
