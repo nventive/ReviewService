@@ -25,5 +25,15 @@ public record ReviewSettings
 	/// <summary>
 	/// Gets or sets when the application first started.
 	/// </summary>
-	public DateTimeOffset? ApplicationFirstLaunched { get; init; }
+	public DateTimeOffset? FirstApplicationLaunch { get; init; }
+
+	/// <summary>
+	/// Gets or sets the number of review requested.
+	/// </summary>
+	public int RequestCount { get; init; }
+
+	/// <summary>
+	/// Gets or sets when the last review was requested.
+	/// </summary>
+	public DateTimeOffset? LastRequest { get; init; }
 }

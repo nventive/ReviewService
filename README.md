@@ -117,6 +117,7 @@ Now that everything is setup, Let's see what else we can do!
 ### Tack Application Events
 
 To track the provided review settings you can use the following `IReviewService` extensions.
+> 💡 The review request count and the last review request are automatically tracked by the service.
 
 - [TrackApplicationLaunched](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewService.Extensions.cs#L20) : Tracks that the application was launched (Also tracks if it's the first launch).
 - [TrackPrimaryActionCompleted](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewService.Extensions.cs#L45) : Tracks that a primary action was completed.
@@ -176,7 +177,9 @@ public static class ReviewServiceExtensions
 - [PrimaryActionCompletedCount](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L13) : The number of primary actions completed.
 - [SecondaryActionCompletedCount](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L18) : The number of secondary actions completed.
 - [ApplicationLaunchCount](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L23) : The number of times the application has been launched.
-- [ApplicationFirstLaunched](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L28) : When the application first started.
+- [FirstApplicationLaunch](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L28) : When the application first started.
+- [RequestCount](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L33) : The number of review requested.
+- [LastRequest](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewSettings.cs#L38) : When the last review was requested.
 
 ### Configure Conditions
 
@@ -186,15 +189,17 @@ The `ReviewConditionsBuilder.Default()` extension method uses the following cond
 - **3** application launches required.
 - **2** completed primary actions.
 - **5** days since the first application launch.
+- **15** days since the last review request.
 
 #### Built-in Conditions
 
 - [MinimumPrimaryActionsCompleted](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L17) : Make sure that it prompts for review only if the number of completed primary actions meets the minimum.
 - [MinimumSecondaryActionsCompleted](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L33) : Make sure that it prompts for review only if the number of completed secondary actions meets the minimum.
 - [MinimumApplicationLaunchCount](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L49) : Make sure that it prompts for review only if the number of times the application has been launched meets the required minimum.
-- [MinimumTimeElapsedSinceApplicationFirstLaunch](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L65) : Make sure that it prompts for review only if the time elapsed since the first application launch meets the required minimum.
-- [Custom](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L83) : Custom condition made with a synchronous lambda function.
-- [CustomAsync](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L97) : Custom asynchronous condition made with an asynchronous lambda function.
+- [MinimumElapsedTimeSinceApplicationFirstLaunch](https://github.com/nventive/ReviewService/blob/a78e37c7e9b6fbe07ba1fec5d0f2b3b2f31bf356/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L65) : Make sure that it prompts for review only if the elapsed time since the first application launch meets the required minimum.
+- [MinimumElapsedTimeSinceLastReviewRequest](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L83) : Make sure that it prompts for review only if the elapsed time since the last review request meets the required minimum.
+- [Custom](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L99) : Custom condition made with a synchronous lambda function.
+- [CustomAsync](https://github.com/nventive/ReviewService/blob/1484f946c60e2bf1cb86b27faa60c148a1e56d45/src/ReviewService.Abstractions/ReviewConditionsBuilder.Extensions.cs#L113) : Custom asynchronous condition made with an asynchronous lambda function.
 
 ### Add Custom Conditions
 

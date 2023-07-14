@@ -58,17 +58,33 @@ public static partial class ReviewConditionBuilderExtensions
 	}
 
 	/// <summary>
-	/// The time elapsed since the first application launch must be at least <paramref name="minimumTimeElapsed"/>.
+	/// The elapsed time since the first application launch must be at least <paramref name="minimumTimeElapsed"/>.
 	/// </summary>
 	/// <typeparam name="TReviewSettings">The type of the object that we use for tracking.</typeparam>
 	/// <param name="builder">The builder.</param>
-	/// <param name="minimumTimeElapsed">The minimum time elapsed since the the first application launch.</param>
+	/// <param name="minimumTimeElapsed">The minimum time elapsed since the first application launch.</param>
 	/// <returns><see cref="IReviewConditionsBuilder{TReviewSettings}"/>.</returns>
-	public static IReviewConditionsBuilder<TReviewSettings> MinimumTimeElapsedSinceApplicationFirstLaunch<TReviewSettings>(this IReviewConditionsBuilder<TReviewSettings> builder, TimeSpan minimumTimeElapsed)
+	public static IReviewConditionsBuilder<TReviewSettings> MinimumElapsedTimeSinceApplicationFirstLaunch<TReviewSettings>(this IReviewConditionsBuilder<TReviewSettings> builder, TimeSpan minimumTimeElapsed)
 		where TReviewSettings : ReviewSettings
 	{
 		builder.Conditions.Add(new SynchronousReviewCondition<TReviewSettings>(
-			(reviewSettings, currentDateTime) => reviewSettings.ApplicationFirstLaunched.HasValue && reviewSettings.ApplicationFirstLaunched.Value + minimumTimeElapsed <= currentDateTime)
+			(reviewSettings, currentDateTime) => reviewSettings.FirstApplicationLaunch.HasValue && reviewSettings.FirstApplicationLaunch.Value + minimumTimeElapsed <= currentDateTime)
+		);
+		return builder;
+	}
+
+	/// <summary>
+	/// The time elapsed since the last review requested must be at least <paramref name="minimumTimeElapsed"/>.
+	/// </summary>
+	/// <typeparam name="TReviewSettings">The type of the object that we use for tracking.</typeparam>
+	/// <param name="builder">The builder.</param>
+	/// <param name="minimumTimeElapsed">The minimum time elapsed since the last review requested.</param>
+	/// <returns><see cref="IReviewConditionsBuilder{TReviewSettings}"/>.</returns>
+	public static IReviewConditionsBuilder<TReviewSettings> MinimumElapsedTimeSinceLastReviewRequest<TReviewSettings>(this IReviewConditionsBuilder<TReviewSettings> builder, TimeSpan minimumTimeElapsed)
+		where TReviewSettings : ReviewSettings
+	{
+		builder.Conditions.Add(new SynchronousReviewCondition<TReviewSettings>(
+			(reviewSettings, currentDateTime) => !reviewSettings.LastRequest.HasValue || reviewSettings.LastRequest.Value + minimumTimeElapsed <= currentDateTime)
 		);
 		return builder;
 	}
