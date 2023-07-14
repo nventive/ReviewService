@@ -40,6 +40,23 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 		_reviewConditions = reviewConditionsBuilder?.Conditions ?? ReviewConditionsBuilder.Default<TReviewSettings>().Conditions;
 	}
 
+	/// <summary>
+	/// Tracks that a review was requested.
+	/// </summary>
+	/// <param name="ct">The cancellation token.</param>
+	/// <returns><see cref="Task"/>.</returns>
+	private async Task TrackReviewRequested(CancellationToken ct)
+	{
+		await UpdateReviewSettings(ct, reviewSettings =>
+		{
+			return reviewSettings with
+			{
+				LastRequest = DateTimeOffset.Now,
+				RequestCount = reviewSettings.RequestCount + 1
+			};
+		});
+	}
+
 	/// <inheritdoc/>
 	public async Task TryRequestReview(CancellationToken ct)
 	{
@@ -48,6 +65,8 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 		if (await GetAreConditionsSatisfied(ct))
 		{
 			await _reviewPrompter.TryPrompt();
+			await TrackReviewRequested(ct);
+
 			_logger.LogInformation("Review requested.");
 		}
 		else

@@ -18,10 +18,22 @@ public sealed class ReviewServiceShould
 				false
 			},
 			new object[]
+			{
+				new ReviewSettings
+				{
+					FirstApplicationLaunch = DateTimeOffset.MinValue,
+					ApplicationLaunchCount = int.MaxValue,
+					PrimaryActionCompletedCount = int.MaxValue,
+					RequestCount = 1,
+					LastRequest = DateTimeOffset.Now
+				},
+				false
+			},
+			new object[]
 			{ 
 				new ReviewSettings
 				{
-					ApplicationFirstLaunched = DateTimeOffset.MinValue,
+					FirstApplicationLaunch = DateTimeOffset.MinValue,
 					ApplicationLaunchCount = int.MaxValue,
 					PrimaryActionCompletedCount = int.MaxValue
 				},

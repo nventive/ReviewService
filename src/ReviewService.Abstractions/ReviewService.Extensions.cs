@@ -21,10 +21,10 @@ public static class ReviewServiceExtensions
 	{
 		await reviewService.UpdateReviewSettings(ct, reviewSettings =>
 		{
-			return reviewSettings.ApplicationFirstLaunched is null
+			return reviewSettings.FirstApplicationLaunch is null
 				? (reviewSettings with
 				{
-					ApplicationFirstLaunched = DateTimeOffset.Now,
+					FirstApplicationLaunch = DateTimeOffset.Now,
 					ApplicationLaunchCount = reviewSettings.ApplicationLaunchCount + 1
 				})
 				: (reviewSettings with

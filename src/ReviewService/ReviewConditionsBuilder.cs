@@ -38,8 +38,9 @@ public static class ReviewConditionsBuilder
 	{
 		return new ReviewConditionsBuilder<TReviewSettings>()
 			.MinimumApplicationLaunchCount(3)
-			.MinimumTimeElapsedSinceApplicationFirstLaunch(TimeSpan.FromDays(5))
-			.MinimumPrimaryActionsCompleted(2);
+			.MinimumElapsedTimeSinceApplicationFirstLaunch(TimeSpan.FromDays(5))
+			.MinimumPrimaryActionsCompleted(2)
+			.MinimumElapsedTimeSinceLastReviewRequest(TimeSpan.FromDays(15));
 	}
 
 	/// <summary>
@@ -50,8 +51,9 @@ public static class ReviewConditionsBuilder
 	{
 		return new ReviewConditionsBuilder<ReviewSettings>()
 			.MinimumApplicationLaunchCount(3)
-			.MinimumTimeElapsedSinceApplicationFirstLaunch(TimeSpan.FromDays(5))
-			.MinimumPrimaryActionsCompleted(2);
+			.MinimumElapsedTimeSinceApplicationFirstLaunch(TimeSpan.FromDays(5))
+			.MinimumPrimaryActionsCompleted(2)
+			.MinimumElapsedTimeSinceLastReviewRequest(TimeSpan.FromDays(15));
 	}
 }
 
