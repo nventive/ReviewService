@@ -46,7 +46,7 @@ stages:
   - job: Publish_NuGet_External
 
     pool:
-      name: $(windowsHostedAgentImage)
+      vmImage: $(windowsHostedAgentImage)
 
     workspace:
       clean: all # Cleanup the workspace before starting.
