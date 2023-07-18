@@ -11,8 +11,8 @@ Before getting started, please read the [Android](https://developer.android.com/
 
 ## Getting Started
 
-1. Add the `ReviewService` NuGet package to your projects (Windows, Android and iOS).
-   > 💡 If you need to implement more platforms or reuse code in a tests project, you can use the `ReviewService.Abstractions` NuGet package.
+1. Add the `ReviewService` and `ReviewSerivce.NativePrompters` NuGet packages to your projects (Windows, Android and iOS).
+   > 💡 If you need to implement more platforms or create custom implementations, you can use the `ReviewService.Abstractions` NuGet package.
 
 2. Create an instance of `ReviewService`. We'll cover dependency injection in details later on in this documentation.
    ``` cs
@@ -103,8 +103,11 @@ using ReviewService;
 
 var host = new HostBuilder()
     .ConfigureServices(serviceCollection => serviceCollection
+        .AddSingleton<IReviewPrompter, ReviewPrompter>()
         .AddSingleton<IReviewSettingsSource<ReviewSettingsCustom>, ReviewSettingsSource>()
-        .AddTransient(s => ReviewConditionsBuilder.Default<ReviewSettingsCustom>())
+        .AddTransient(s => ReviewConditionsBuilder
+            .Default<ReviewSettingsCustom>()
+        )
         .AddSingleton<IReviewService<ReviewSettingsCustom>, ReviewService<ReviewSettingsCustom>>()
     )
     .Build();
@@ -128,7 +131,7 @@ To track the provided review settings you can use the following `IReviewService`
 If you need custom conditions for your application, you have to create another record that inherits from `ReviewSettings`.
 
  ``` cs
-using ReviewService.Abstractions;
+using ReviewService;
 
 /// <summary>
 /// The custom review prompt settings used for prompt conditions.
