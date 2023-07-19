@@ -15,7 +15,7 @@ public sealed class LoggingReviewPrompter : IReviewPrompter
 	/// Initializes a new instance of the <see cref="LoggingReviewPrompter"/> class.
 	/// </summary>
 	/// <param name="logger">The logger in which to log the <see cref="TryPrompt"/> invocation.</param>
-	public LoggingReviewPrompter(ILogger<LoggingReviewPrompter> logger)
+	public LoggingReviewPrompter(ILogger<LoggingReviewPrompter>? logger)
 	{
 		_logger = logger ?? NullLogger<LoggingReviewPrompter>.Instance;
 	}

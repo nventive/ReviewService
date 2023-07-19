@@ -28,10 +28,10 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 	/// <param name="reviewSettingsSource">The review settings source (Read and write).</param>
 	/// <param name="reviewConditionsBuilder">The review conditions builder.</param>
 	public ReviewService(
-		ILogger<ReviewService<TReviewSettings>> logger,
+		ILogger<ReviewService<TReviewSettings>>? logger,
 		IReviewPrompter reviewPrompter,
 		IReviewSettingsSource<TReviewSettings> reviewSettingsSource,
-		IReviewConditionsBuilder<TReviewSettings> reviewConditionsBuilder
+		IReviewConditionsBuilder<TReviewSettings>? reviewConditionsBuilder
 	)
 	{
 		_logger = logger ?? NullLogger<ReviewService<TReviewSettings>>.Instance;

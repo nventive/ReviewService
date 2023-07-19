@@ -8,9 +8,9 @@ namespace ReviewService;
 /// </summary>
 /// <typeparam name="TReviewSettings">The type of the persisted object.</typeparam>
 public sealed class MemoryReviewSettingsSource<TReviewSettings> : IReviewSettingsSource<TReviewSettings>
-	where TReviewSettings : ReviewSettings
+	where TReviewSettings : ReviewSettings, new()
 {
-	private TReviewSettings _reviewSettings = default;
+	private TReviewSettings _reviewSettings = new TReviewSettings();
 
 	/// <inheritdoc/>
 	public Task<TReviewSettings> Read(CancellationToken ct)

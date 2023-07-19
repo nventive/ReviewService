@@ -113,6 +113,53 @@ var host = new HostBuilder()
     .Build();
 ```
 
+> 💡 We recommend that you define your own interface that wraps `IReviewService<YouChoiceOfReviewSettings>` to make the usage code leaner and ease any potential refactorings.
+> ```csharp
+> /// <summary>
+> /// This interface wraps <see cref="IReviewService{TReviewSettings}"/> so that you don't have to repeat the generic parameter everywhere that you would use the review service.
+> /// In other words, you should use this interface in the app instead of <see cref="IReviewService{TReviewSettings}"/> because it's leaner.
+> /// </summary>
+> /// <remarks>
+> /// If you would change <see cref="ReviewSettings"/> for a custom type, using this interface allows you to minimize any refactoring effort by limiting it to this interface and the associated adapter.
+> /// </remarks>
+> public interface IReviewService : IReviewService<ReviewSettings>
+> {
+> }
+> ```
+> Here's a full example.
+> ```csharp
+> public static class ReviewConfiguration
+> {
+> 	public static IServiceCollection AddReviewServices(this IServiceCollection services)
+> 	{
+> 		return services
+> 			.AddTransient(s => ReviewConditionsBuilder
+> 				.Empty()
+> 				.MinimumPrimaryActionsCompleted(3)
+> 			)
+> 			.AddSingleton<IReviewPrompter, LoggingReviewPrompter>()
+> 			.AddSingleton<IReviewSettingsSource<ReviewSettings>, MemoryReviewSettingsSource<ReviewSettings>>()
+> 			.AddSingleton<IReviewService<ReviewSettings>, ReviewService<ReviewSettings>>()
+> 			.AddSingleton<IReviewService, ReviewServiceAdapter>();
+> 	}
+> 
+> 	private sealed class ReviewServiceAdapter : IReviewService
+> 	{
+> 		private readonly IReviewService<ReviewSettings> _reviewService;
+> 
+> 		public ReviewServiceAdapter(IReviewService<ReviewSettings> reviewService)
+> 		{
+> 			_reviewService = reviewService;
+> 		}
+> 
+> 		public Task<bool> GetAreConditionsSatisfied(CancellationToken ct) => _reviewService.GetAreConditionsSatisfied(ct);
+> 
+> 		public Task TryRequestReview(CancellationToken ct) => _reviewService.TryRequestReview(ct);
+> 
+> 		public Task UpdateReviewSettings(CancellationToken ct, Func<ReviewSettings, ReviewSettings> updateFunction) => _reviewService.UpdateReviewSettings(ct, updateFunction);
+> 
+> ```
+
 ## Features
 
 Now that everything is setup, Let's see what else we can do!
