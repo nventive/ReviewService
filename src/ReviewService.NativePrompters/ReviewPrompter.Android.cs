@@ -12,7 +12,7 @@ namespace ReviewService;
 /// </summary>
 public sealed class ReviewPrompter : IReviewPrompter, IDisposable
 {
-	private readonly Android.OS.Handler _handler = new(Android.OS.Looper.MainLooper);
+	private readonly Android.OS.Handler _handler = new(Android.OS.Looper.MainLooper!);
 
 	private readonly ILogger _logger;
 
@@ -20,7 +20,7 @@ public sealed class ReviewPrompter : IReviewPrompter, IDisposable
 	/// Initializes a new instance of the <see cref="ReviewPrompter"/> class.
 	/// </summary>
 	/// <param name="logger">The service logger.</param>
-	public ReviewPrompter(ILogger<ReviewPrompter> logger)
+	public ReviewPrompter(ILogger<ReviewPrompter>? logger)
 	{
 		_logger = logger ?? NullLogger<ReviewPrompter>.Instance;
 	}
