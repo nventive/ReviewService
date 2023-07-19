@@ -71,7 +71,7 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 		}
 		else
 		{
-			_logger.LogInformation("Failed to request a review because one or more conditions were not satisfied.");
+			_logger.LogInformation("Did not request a review because one or more conditions were not satisfied.");
 		}
 	}
 
@@ -90,7 +90,7 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 		}
 		else
 		{
-			_logger.LogInformation("Evaluted conditions and one or more conditions were not satisfied.");
+			_logger.LogInformation("Evaluated conditions and one or more conditions were not satisfied.");
 		}
 
 		return result;
