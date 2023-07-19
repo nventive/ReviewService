@@ -3,7 +3,7 @@
 This repository introduces abstractions around native review capabilities to ease code sharing and testability.
 It also introduces business logic to quickly configure conditions and state tracking to prompt for reviews at the right moment.
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE) ![Version](https://img.shields.io/nuget/v/ReviewService?style=flat-square) ![Downloads](https://img.shields.io/nuget/dt/ReviewService?style=flat-square)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE) ![Version](https://img.shields.io/nuget/v/ReviewService.Abstractions?style=flat-square) ![Downloads](https://img.shields.io/nuget/dt/ReviewService.Abstractions?style=flat-square)
 
 ## Before Getting Started
 
