@@ -9,3 +9,6 @@ Example:
   - `This` was renamed to `That`.
      
 -->
+
+## 2.0.0
+  - Update .NET Target From 6 To 8.
