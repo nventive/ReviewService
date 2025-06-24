@@ -22,11 +22,11 @@ public class ReviewPrompter : IReviewPrompter
 	}
 
 	/// <inheritdoc/>
-	public Task TryPrompt()
+	public Task<ReviewPromptStatus> TryPrompt()
 	{
 		_logger.LogWarning("Prompting for a review is not implemented on Windows.");
 
-		return Task.CompletedTask;
+		return Task.FromResult(ReviewPromptStatus.Unknown);
 	}
 }
 #endif

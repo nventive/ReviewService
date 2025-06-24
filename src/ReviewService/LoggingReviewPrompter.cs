@@ -21,10 +21,10 @@ public sealed class LoggingReviewPrompter : IReviewPrompter
 	}
 
 	/// <inheritdoc/>
-	public Task TryPrompt()
+	public Task<ReviewPromptStatus> TryPrompt()
 	{
 		_logger.LogInformation("TryPrompt was invoked.");
 
-		return Task.CompletedTask;
+		return Task.FromResult(ReviewPromptStatus.Success);
 	}
 }

@@ -44,7 +44,6 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 	/// Tracks that a review was requested.
 	/// </summary>
 	/// <param name="ct">The cancellation token.</param>
-	/// <returns><see cref="Task"/>.</returns>
 	private async Task TrackReviewRequested(CancellationToken ct)
 	{
 		await UpdateReviewSettings(ct, reviewSettings =>
@@ -58,20 +57,22 @@ public sealed class ReviewService<TReviewSettings> : IReviewService<TReviewSetti
 	}
 
 	/// <inheritdoc/>
-	public async Task TryRequestReview(CancellationToken ct)
+	public async Task<ReviewRequestResult> TryRequestReview(CancellationToken ct)
 	{
 		_logger.LogDebug("Trying to request a review.");
 
 		if (await GetAreConditionsSatisfied(ct))
 		{
-			await _reviewPrompter.TryPrompt();
+			var status = await _reviewPrompter.TryPrompt();
 			await TrackReviewRequested(ct);
 
-			_logger.LogInformation("Review requested.");
+			_logger.LogInformation("Review requested with status: {Status}.", status);
+			return new ReviewRequestResult(status);
 		}
 		else
 		{
 			_logger.LogInformation("Did not request a review because one or more conditions were not satisfied.");
+			return new ReviewRequestResult(ReviewPromptStatus.NotAttempted);
 		}
 	}
 

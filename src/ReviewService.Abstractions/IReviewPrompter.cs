@@ -18,6 +18,6 @@ public interface IReviewPrompter
 	/// <summary>
 	/// Prompts the user to rate the current application using the platform's default application store.
 	/// </summary>
-	/// <returns><see cref="Task"/>.</returns>
-	Task TryPrompt();
+	/// <returns>The review prompt status.</returns>
+	Task<ReviewPromptStatus> TryPrompt();
 }

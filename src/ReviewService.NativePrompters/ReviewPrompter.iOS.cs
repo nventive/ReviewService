@@ -24,9 +24,9 @@ public sealed class ReviewPrompter : IReviewPrompter
 	}
 
 	/// <inheritdoc/>
-	public Task TryPrompt()
+	public Task<ReviewPromptStatus> TryPrompt()
 	{
-		var tcs = new TaskCompletionSource();
+		var tcs = new TaskCompletionSource<ReviewPromptStatus>();
 
 		Foundation.NSRunLoop.Main.BeginInvokeOnMainThread(async () =>
 		{
@@ -34,11 +34,11 @@ public sealed class ReviewPrompter : IReviewPrompter
 			{
 				_logger.LogDebug("Trying to prompt the user for a review.");
 
-				await CrossStoreReview.Current.RequestReview(false);
+				var reviewStatus = await CrossStoreReview.Current.RequestReview(false);
 
 				_logger.LogInformation("Prompted the user for a review.");
 
-				tcs.SetResult();
+				tcs.SetResult(reviewStatus.ToReviewPromptStatus());
 			}
 			catch (Exception e)
 			{

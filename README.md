@@ -1,4 +1,4 @@
-# Review Service
+﻿# Review Service
 
 This repository introduces abstractions around native review capabilities to ease code sharing and testability.
 It also introduces business logic to quickly configure conditions and state tracking to prompt for reviews at the right moment.
@@ -55,7 +55,16 @@ Before getting started, please read the [Android](https://developer.android.com/
           // Do Meaningful Task.
 
           // Check if all conditions are satisfied and prompt for review if they are.
-          await _reviewService.TryRequestReview(ct);
+          var result = await _reviewService.TryRequestReview(ct);
+    
+          if (result.IsSuccessful)
+          {
+              // Review prompt was successfully shown
+          }
+          else
+          {
+              Console.WriteLine( $ "Review request status: {result.Status}.");
+          }
       }
       ```
 
@@ -154,7 +163,11 @@ var host = new HostBuilder()
 > 
 > 		public Task<bool> GetAreConditionsSatisfied(CancellationToken ct) => _reviewService.GetAreConditionsSatisfied(ct);
 > 
-> 		public Task TryRequestReview(CancellationToken ct) => _reviewService.TryRequestReview(ct);
+> 		public async Task<ReviewRequestResult> TryRequestReview(CancellationToken ct)
+> 		{
+> 			var status = await _reviewService.TryRequestReview(ct);
+> 			return new ReviewRequestResult(status);
+> 		} 
 > 
 > 		public Task UpdateReviewSettings(CancellationToken ct, Func<ReviewSettings, ReviewSettings> updateFunction) => _reviewService.UpdateReviewSettings(ct, updateFunction);
 > 	}
