@@ -157,7 +157,8 @@ var host = new HostBuilder()
 > 		public Task TryRequestReview(CancellationToken ct) => _reviewService.TryRequestReview(ct);
 > 
 > 		public Task UpdateReviewSettings(CancellationToken ct, Func<ReviewSettings, ReviewSettings> updateFunction) => _reviewService.UpdateReviewSettings(ct, updateFunction);
-> 
+> 	}
+> }
 > ```
 
 ## Features
