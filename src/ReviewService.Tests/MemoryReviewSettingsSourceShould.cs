@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReviewService.Tests;
+﻿namespace ReviewService.Tests;
 
 public sealed class MemoryReviewSettingsSourceShould
 {
 	[Fact]
-	public async Task Not_return_null_when_reading_from_a_new_instance()
+	public async Task Not_Return_Null_When_Reading_From_A_New_Instance()
 	{
 		// Arrange
 		var source = new MemoryReviewSettingsSource<ReviewSettings>();
@@ -23,7 +17,7 @@ public sealed class MemoryReviewSettingsSourceShould
 	}
 
 	[Fact]
-	public async Task Return_the_same_value_that_was_written_when_reading()
+	public async Task Return_The_Same_Value_That_Was_Written_When_Reading()
 	{
 		// Arrange
 		var source = new MemoryReviewSettingsSource<ReviewSettings>();
@@ -34,7 +28,7 @@ public sealed class MemoryReviewSettingsSourceShould
 		};
 
 		await source.Write(cancellationToken, value);
-		
+
 		// Act
 		var result = await source.Read(cancellationToken);
 

@@ -16,8 +16,8 @@ public interface IReviewService<TReviewSettings>
 	/// Checks if all review prompt conditions are satisfied and then prompt user to review the current application.
 	/// </summary>
 	/// <param name="ct"><see cref="CancellationToken"/>.</param>
-	/// <returns><see cref="Task"/>.</returns>
-	Task TryRequestReview(CancellationToken ct);
+	/// <returns>A <see cref="ReviewRequestResult"/> containing the status and success information.</returns>
+	Task<ReviewRequestResult> TryRequestReview(CancellationToken ct);
 
 	/// <summary>
 	/// Gets if all conditions are satisfied which means that we can prompt user to review the current application.
@@ -31,6 +31,5 @@ public interface IReviewService<TReviewSettings>
 	/// </summary>
 	/// <param name="ct"><see cref="CancellationToken"/>.</param>
 	/// <param name="updateFunction">Function that returns updated <typeparamref name="TReviewSettings"/>.</param>
-	/// <returns><see cref="Task"/>.</returns>
 	Task UpdateReviewSettings(CancellationToken ct, Func<TReviewSettings, TReviewSettings> updateFunction);
 }
