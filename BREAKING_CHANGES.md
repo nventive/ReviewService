@@ -10,6 +10,9 @@ Example:
   - `This` was renamed to `That`.
 -->
 
+## 4.0.0
+  - Update .NET Target From 8 To 10.
+
 ## 3.0.0
   - The 'IReviewService.TryRequestReview' now returns a result.
 
